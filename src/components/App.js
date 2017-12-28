@@ -1,6 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Firebase from 'firebase';
+
+import Admin from './Admin';
+import User from './User';
+
 import actions from '../actions';
 
 export class App extends React.Component {
@@ -14,31 +18,35 @@ export class App extends React.Component {
   }
 
   checkUserInfo = props => {
-    const {userInfo, fetchUser} = props;
+    const {userInfo, fetchInitialData} = props;
 
     if(!userInfo) {
-      fetchUser();
+      fetchInitialData();
     } else if(!userInfo.user) {
       Firebase.auth().signInWithRedirect(new Firebase.auth.GoogleAuthProvider());
     }
   }
 
   render() {
-    return (
-      <div>Toimii!</div>
-    );
+    const {userInfo, adminUid} = this.props;
+    if (!userInfo) {
+      return <div>Loading</div>;
+    }
+    const isAdmin = userInfo.user && userInfo.user.uid === adminUid;
+    return isAdmin ? <Admin/> : <User/>;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    userInfo: state.userInfo
+    userInfo: state.userInfo,
+    adminUid: state.adminUid
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchUser: () => dispatch(actions.fetchUser())
+    fetchInitialData: () => dispatch(actions.fetchInitialData())
   };
 }
 
