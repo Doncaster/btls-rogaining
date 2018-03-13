@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux';
 import {constants} from './actions';
+import admin from './reducers/admin';
+import user from './reducers/user';
 
 const userInfo = (state = null, action) => {
   if (action.type === constants.LOAD_USER_INFO) {
@@ -17,5 +19,7 @@ const adminUid = (state = null, action) => {
 
 export default combineReducers({
   userInfo,
-  adminUid
+  adminUid,
+  admin,
+  user
 });

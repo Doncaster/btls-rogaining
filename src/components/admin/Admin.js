@@ -11,6 +11,7 @@ export class Admin extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    currentGame: state.admin.currentGame
   };
 }
 

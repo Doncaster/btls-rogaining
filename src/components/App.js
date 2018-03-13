@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as Firebase from 'firebase';
 
-import Admin from './Admin';
+import Admin from './admin/Admin';
 import User from './User';
 
 import actions from '../actions';
